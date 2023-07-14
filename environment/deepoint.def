@@ -1,0 +1,42 @@
+Bootstrap: docker
+From: python:3.10-slim-bookworm
+
+%post
+    export DEBIAN_FRONTEND=noninteractive
+    export PYTHONNOUSERSITE=1
+    export LANG=en_US.UTF-8
+
+    mkdir -p /workspace
+    cd /workspace
+
+    # Install some basic utilities
+    apt-get update
+    apt-get install -y libgl1 libglx0 libglib2.0-0
+
+    apt-get install -y vim curl x11-apps git g++ wget make unzip ssh sshfs
+    apt-get install -y python3-tk
+    apt-get install -y ffmpeg
+    apt-get install -y parallel
+    apt-get install -y htop
+    apt-get install -y zsh
+    apt-get install -y squashfs-tools
+    apt-get install -y gawk
+    apt-get install -y rsync
+
+    pip install --upgrade pip
+    pip install opencv-python~=4.7 opencv-contrib-python~=4.7
+    pip install torch~=1.13 torchvision~=0.14 numpy~=1.24 pytorch-lightning~=2.0
+    pip install matplotlib scipy tqdm scikit-image scikit-learn numba tensorboard bm3d pandas Pillow
+    pip install einops
+    pip install openpifpaf
+    pip install hydra-core
+
+    pip install pyopengl
+    pip install glfw
+
+%environment
+    export PYTHONNOUSERSITE=1
+    export LANG=en_US.UTF-8
+
+%runscript
+    bash

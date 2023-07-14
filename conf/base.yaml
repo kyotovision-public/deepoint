@@ -1,0 +1,22 @@
+defaults:
+  - data: DP
+  - model: DP-base
+  - hardware: full
+  - _self_
+
+task: train
+incl_all: false
+train_ratio: 0.7
+split_method: time
+overfit: false
+ckpt: null
+noanswer: false
+
+movie: null
+lr: null
+verbose: false
+shrink_rate: 0.1
+filter_joint: null # null, 'hand' or 'handhead'
+use_preprocessed: false
+debug: false
+hist_error: false

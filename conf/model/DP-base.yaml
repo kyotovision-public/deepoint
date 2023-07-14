@@ -1,0 +1,10 @@
+tlength: 15
+featvec_joint: true
+hidden_size: 192
+attention_heads: 12
+num_layers: 6
+
+# ablation study
+featvec_bb: false
+featvec_img: false
+omit_temporal_encoder: false
