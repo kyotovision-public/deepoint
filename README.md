@@ -36,8 +36,8 @@ singularity run --nv environment/deepoint.sif
 ## Usage
 
 ### Demo
-You can download the pretrained model from [here]().
-Download it and save the `.ckpt` file as `models/weight.ckpt`.
+You can download the pretrained model from [here](https://drive.google.com/file/d/1I887Y_G27sPf6QaFfMDTJoHVcTR-pTR_/view?usp=drive_link).
+Download it and save the file as `models/weight.ckpt`.
 
 You can apply the model on your video and visualize the result by running the script below.
 ```
