@@ -35,10 +35,10 @@ deepoint
 
 Since the dataset consists of many JPEG images, they are put together with `squashfs`.
 You need to mount each files in `frames_squashed` in the `frames` directory.
-You can do this by running
-```
-./mount_frames.sh
-```
+You can do this by running `./mount_frames.sh`.
+
+### Demo
+You can visualize triangulation results using [`visualization.ipynb`](./visualization.ipynb) to better understand the data structure of the DP dataset.
 
 ## Structure
 ### frames_squashed

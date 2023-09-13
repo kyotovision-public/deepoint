@@ -26,10 +26,7 @@ From: python:3.10-slim-bookworm
     pip install --upgrade pip
     pip install opencv-python~=4.7 opencv-contrib-python~=4.7
     pip install torch~=1.13 torchvision~=0.14 numpy~=1.24 pytorch-lightning~=2.0
-    pip install matplotlib scipy tqdm scikit-image scikit-learn numba tensorboard bm3d pandas Pillow
-    pip install einops
-    pip install openpifpaf
-    pip install hydra-core
+    pip install matplotlib scipy tqdm scikit-image scikit-learn numba tensorboard bm3d pandas Pillow einops openpifpaf hydra-core notebook notebook plotly
 
     pip install pyopengl
     pip install glfw
