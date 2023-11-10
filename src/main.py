@@ -31,16 +31,13 @@ def build_module_and_trainer(cfg, DEVICE):
         save_top_k=-1,
     )
 
-    print(
-        f"log save dir is lightning_logs/split_{cfg.split_method}{'-bb' if cfg.model.featvec_bb else ''}{'-img' if cfg.model.featvec_img else ''}{'-tl='+str(cfg.model.tlength) if cfg.model.tlength!=15 else ''}{'-MLPasTE' if cfg.model.omit_temporal_encoder else ''}{cfg.filter_joint if cfg.filter_joint is not None else ''}"
-    )
+    save_dir = f"lightning_logs/split_{cfg.split_method}{'-bb' if cfg.model.featvec_bb else ''}{'-img' if cfg.model.featvec_img else ''}{'-tl='+str(cfg.model.tlength) if cfg.model.tlength!=15 else ''}{'-MLPasTE' if cfg.model.omit_temporal_encoder else ''}{cfg.filter_joint if cfg.filter_joint is not None else ''}"
+    print(f"log save dir is {save_dir}")
     trainer = pl.Trainer(
         devices=cfg.hardware.gpus,
         strategy=strategy,
         callbacks=[callbacks],
-        logger=pl_loggers.TensorBoardLogger(
-            save_dir=f"lightning_logs/split_{cfg.split_method}{'-bb' if cfg.model.featvec_bb else ''}{'-img' if cfg.model.featvec_img else ''}{'-tl='+str(cfg.model.tlength) if cfg.model.tlength!=15 else ''}{'-MLPasTE' if cfg.model.omit_temporal_encoder else ''}{cfg.filter_joint if cfg.filter_joint is not None else ''}"
-        ),
+        logger=pl_loggers.TensorBoardLogger(save_dir=save_dir),
     )
 
     return module, trainer
