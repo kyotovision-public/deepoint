@@ -1,6 +1,6 @@
 # DeePoint: Visual Pointing Recognition and Direction Estimation, ICCV 2023
 
-This repository provides an implementation of our paper [DeePoint: Visual Pointing Recognition and Direction Estimation]() in ICCV 2023. If you use our code and data please cite our paper.
+This repository provides an implementation of our paper [DeePoint: Visual Pointing Recognition and Direction Estimation](https://openaccess.thecvf.com/content/ICCV2023/html/Nakamura_DeePoint_Visual_Pointing_Recognition_and_Direction_Estimation_ICCV_2023_paper.html) in ICCV 2023. If you use our code and data please cite our paper.
 
 Please note that this is research software and may contain bugs or other issues – please use it at your own risk. If you experience major problems with it, you may contact us, but please note that we do not have the resources to deal with all issues.
 
