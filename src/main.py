@@ -67,7 +67,7 @@ def main(cfg: DictConfig) -> None:
 
     module, trainer = build_module_and_trainer(cfg, DEVICE)
 
-    keypoints_path = Path(__file__).parent.parent / cfg.keypoints_root
+    keypoints_path = Path(__file__).parent.parent / cfg.data.keypoints_root
     ds = dataset.DPDataset(keypoints_path, cfg)
 
     match cfg.split_method:

@@ -1,7 +1,7 @@
 dataset_name: "DPDataset"
 data_root: "data/frames/"
 label_root: "data/labels/"
-keypoints_root: "data/labels/"
+keypoints_root: "data/keypoints/"
 venue_names:
 - "2023-01-17-livingroom"
 - "2023-01-18-livingroom"
