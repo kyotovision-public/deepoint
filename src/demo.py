@@ -12,7 +12,6 @@ from model import build_pointing_network
 
 @hydra.main(version_base=None, config_path="../conf", config_name="base")
 def main(cfg: DictConfig) -> None:
-
     import logging
 
     logging.info(
@@ -36,6 +35,8 @@ def main(cfg: DictConfig) -> None:
 
     assert cfg.ckpt is not None, "checkpoint should be specified for evaluation"
 
+    cfg.hardware.bs = 2
+    cfg.hardware.nworkers = 0
     ds = dataset.MovieDataset(cfg.movie, cfg.lr, cfg.model.tlength, DEVICE)
     dl = DataLoader(
         ds,
@@ -58,8 +59,14 @@ def main(cfg: DictConfig) -> None:
 
     Path("demo").mkdir(exist_ok=True)
     fps = 15
-    out = cv2.VideoWriter(
-        f"demo/{Path(cfg.movie).name}-processed.mp4",
+    out_green = cv2.VideoWriter(
+        f"demo/{Path(cfg.movie).name}-processed-green-{cfg.lr}.mp4",
+        cv2.VideoWriter_fourcc("m", "p", "4", "v"),
+        fps,
+        (WIDTH, HEIGHT),
+    )
+    out_greenred = cv2.VideoWriter(
+        f"demo/{Path(cfg.movie).name}-processed-greenred-{cfg.lr}.mp4",
         cv2.VideoWriter_fourcc("m", "p", "4", "v"),
         fps,
         (WIDTH, HEIGHT),
@@ -89,7 +96,7 @@ def main(cfg: DictConfig) -> None:
                 )
                 prev_arrow_base = arrow_base
 
-            image = draw_arrow_on_image(
+            image_green = draw_arrow_on_image(
                 image,
                 (
                     arrow_base[0],
@@ -100,19 +107,39 @@ def main(cfg: DictConfig) -> None:
                 ),
                 dict(
                     acolor=(
-                        1 - prob_pointing,
+                        0,
                         1,
-                        1 - prob_pointing,
+                        0,
                     ),  # Green. OpenCV uses BGR
                     asize=0.05 * prob_pointing,
                     offset=0.02,
                 ),
             )
+            image_greenred = draw_arrow_on_image(
+                image,
+                (
+                    arrow_base[0],
+                    -arrow_base[1],
+                    direction[0].cpu(),
+                    direction[2].cpu(),
+                    -direction[1].cpu(),
+                ),
+                dict(
+                    acolor=(
+                        0,
+                        prob_pointing,
+                        1 - prob_pointing,
+                    ),  # Green to red. OpenCV uses BGR
+                    asize=0.05 * prob_pointing,
+                    offset=0.02,
+                ),
+            )
 
-            cv2.imshow("", image)
+            cv2.imshow("", image_green)
             cv2.waitKey(10)
 
-            out.write((image * 255).astype(np.uint8))
+            out_green.write((image_green * 255).astype(np.uint8))
+            out_greenred.write((image_greenred * 255).astype(np.uint8))
 
     return
 

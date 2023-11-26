@@ -76,7 +76,6 @@ def render_frame(
     """
     gl.glClear(gl.GL_COLOR_BUFFER_BIT)
     with shader:
-
         x_position += vx * offset * (asize / 0.05)
         y_position += vy * offset * (asize / 0.05)
 
@@ -105,14 +104,13 @@ def render_frame(
 
 # For debugging.
 if __name__ == "__main__":
-
     import cv2
     from math import sqrt
 
     x = 1
     y = 0
     z = 0
-    r = sqrt(x ** 2 + y ** 2 + z ** 2)
+    r = sqrt(x**2 + y**2 + z**2)
 
     img_arrow = (
         render_frame(
@@ -121,7 +119,7 @@ if __name__ == "__main__":
             x / r,
             y / r,
             z / r,
-            acolor=(0, 0.5, 0.5),
+            acolor=(1, 0, 0),
             asize=0.25,
             offset=0,
         )

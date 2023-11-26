@@ -46,8 +46,8 @@ const vec3 SPECULAR_COLOR = WHITE;
 
 const float AMBIENT_RATIO = 0.37;
 const float DIFFUSE_RATIO = 0.53;
-const float SPECULAR_RATIO = 0.1;
-const float SPECULAR_ALPHA = 3.5;
+const float SPECULAR_RATIO = 0.04;
+const float SPECULAR_ALPHA = 2.0;
 
 const vec3 LIGHT_DIRECTION = normalize(vec3(1, -1, -1));
 
@@ -254,8 +254,8 @@ vec3 norm(in vec3 coord) {
 vec3 cellShadingObjColor(vec3 point, vec3 ray, vec3 objColor) {
     vec3 n = norm(point);
 
-    float diffuseValue = max(dot(-LIGHT_DIRECTION, n), 0.);
-    float specularValue = pow(max(dot(-reflect(LIGHT_DIRECTION, n), ray), 0.), SPECULAR_ALPHA);        
+    float diffuseValue = max(dot(-LIGHT_DIRECTION, n)/2.5+0.6, 0.);
+    float specularValue = pow(max(dot(-reflect(LIGHT_DIRECTION, n), ray), 0.), SPECULAR_ALPHA);
     return (0.5*objColor + 0.5*AMBIENT_COLOR) * AMBIENT_RATIO
     + objColor * DIFFUSE_RATIO * diffuseValue
     + SPECULAR_COLOR * SPECULAR_RATIO * specularValue;
