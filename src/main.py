@@ -32,7 +32,7 @@ def build_module_and_trainer(cfg, DEVICE):
     )
 
     save_dir = f"lightning_logs/split_{cfg.split_method}{'-bb' if cfg.model.featvec_bb else ''}{'-img' if cfg.model.featvec_img else ''}{'-tl='+str(cfg.model.tlength) if cfg.model.tlength!=15 else ''}{'-MLPasTE' if cfg.model.omit_temporal_encoder else ''}{cfg.filter_joint if cfg.filter_joint is not None else ''}"
-    print(f"log save dir is {save_dir}")
+    print(f"lightning_logs are saved to {save_dir}")
     trainer = pl.Trainer(
         devices=cfg.hardware.gpus,
         strategy=strategy,
@@ -93,7 +93,7 @@ def main(cfg: DictConfig) -> None:
     val_ds = Subset(ds, val_idx)
 
     if cfg.shrink_rate != 1:
-        # shrink_rate
+        # SPLIT_INTOに分けて、それぞれのpackからshrink_rate割だけ取り出す
         SPLIT_INTO = 30 * 15
         pack_len = len(test_idx) // SPLIT_INTO
         print(f"{pack_len=}")
@@ -126,6 +126,7 @@ def main(cfg: DictConfig) -> None:
         persistent_workers=True if cfg.hardware.nworkers != 0 else False,
     )
 
+    print(f"Starting {cfg.task}...")
     if cfg.task == "train":
         trainer.fit(module, train_dl, val_dl, ckpt_path=cfg.ckpt)
     elif cfg.task == "test":

@@ -428,6 +428,25 @@ class DPDataset(Dataset):
             "action_id": action_id,
         }
 
+        # If verbose:
+        # - load image for visualization
+        # - return camera parameters
+        image = []
+        camera_param = []
+        if self.cfg.verbose:
+            image_path = (
+                Path(venue_path)
+                / session
+                / f"{camera_id:02d}"
+                / f"{frames[-1]+1:010d}.jpg"  # The output of ffmpeg is 1-indexed
+            )
+            image = torchvision.io.read_image(str(image_path))
+
+            camera_param = self.cameraparam_dict[venue_path][f"{camera_id:02d}"]
+            camera_param["filepath"] = str(
+                camera_param["filepath"]
+            )  # PosixPathはcollateできないので文字列に変える
+
         return {
             "idx": idx,
             "venue_path": venue_path,
@@ -447,6 +466,7 @@ class DPDataset(Dataset):
             "keypoints": keypoints,
             "jointcoords": jointcoords,
             "camera_id": camera_id,
+            "camera_param": camera_param,
             "frames": frames,
         }
 
