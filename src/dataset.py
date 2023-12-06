@@ -554,6 +554,7 @@ class MovieDataset(Dataset):
     JOINT_THRESH: float = 0.4
     SCORE_THRESH: float = 0.4
     NUM_JOINTS: int = 17
+    SKIPBY = 1
 
     def __init__(self, movie_path: str, lr: str, token_length: int, device: str):
         self.lr = lr
@@ -576,15 +577,13 @@ class MovieDataset(Dataset):
         self.prev_frame = -1
 
     def __len__(self):
-        return (self.num_frames - self.token_length) // 2
+        return (self.num_frames - self.token_length) // self.SKIPBY
 
     def __getitem__(self, idx: int):
         images = []
         keypoints, bboxes = [], []
         SHRINKBY = 2
-        SKIPBY = 1
-        idx *= 2
-        for i in range(idx, idx + self.token_length * SKIPBY, SKIPBY):
+        for i in range(idx, idx + self.token_length * self.SKIPBY, self.SKIPBY):
             if i != self.prev_frame:
                 self.cap.set(cv2.CAP_PROP_POS_FRAMES, i)
             self.prev_frame = i
