@@ -396,9 +396,9 @@ class DPDataset(Dataset):
         )[:, None, :]
 
         # Add special token to joint position tokens
-        ntoken, _, _ = abs_joint_pos.shape
         rel_joint_pos = torch.concat(
-            (rel_joint_pos, torch.tensor([0]).repeat(ntoken, 1, 2)), dim=1
+            (rel_joint_pos, torch.tensor([0]).repeat(self.cfg.model.tlength, 1, 2)),
+            dim=1,
         )
 
         # src_key_padding_mask for transformer
@@ -668,9 +668,9 @@ class MovieDataset(Dataset):
         )[:, None, :]
 
         # Add special token to joint position tokens
-        ntoken, _, _ = abs_joint_pos.shape
         rel_joint_pos = torch.concat(
-            (rel_joint_pos, torch.tensor([0]).repeat(ntoken, 1, 2)), dim=1
+            (rel_joint_pos, torch.tensor([0]).repeat(self.cfg.model.tlength, 1, 2)),
+            dim=1,
         )
 
         # src_key_padding_mask for transformer
