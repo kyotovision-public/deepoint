@@ -75,7 +75,9 @@ def main(cfg: DictConfig) -> None:
 
     for batch in tqdm(dl):
         result = network(batch)
-        for i_bs in range(cfg.hardware.bs):
+        # bs may be smaller than cfg.hardware.bs for the last iteration
+        bs = batch["abs_joint_position"].shape[0]
+        for i_bs in range(bs):
             joints = batch["abs_joint_position"][i_bs][-1].to("cpu").numpy()
             image = batch["orig_image"][i_bs].to("cpu").numpy() / 255
 
