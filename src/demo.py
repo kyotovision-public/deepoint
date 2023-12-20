@@ -8,6 +8,7 @@ import hydra
 from torch.utils.data import DataLoader
 from omegaconf import DictConfig, OmegaConf
 from model import build_pointing_network
+from draw_arrow import WIDTH, HEIGHT
 
 
 @hydra.main(version_base=None, config_path="../conf", config_name="base")
@@ -54,8 +55,6 @@ def main(cfg: DictConfig) -> None:
     model_dict = new_model_dict
     network.load_state_dict(model_dict)
     network.to(DEVICE)
-
-    from draw_arrow import WIDTH, HEIGHT
 
     Path("demo").mkdir(exist_ok=True)
     fps = 15
