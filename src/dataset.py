@@ -669,7 +669,7 @@ class MovieDataset(Dataset):
 
         # Add special token to joint position tokens
         rel_joint_pos = torch.concat(
-            (rel_joint_pos, torch.tensor([0]).repeat(self.cfg.model.tlength, 1, 2)),
+            (rel_joint_pos, torch.tensor([0]).repeat(self.token_length, 1, 2)),
             dim=1,
         )
 
